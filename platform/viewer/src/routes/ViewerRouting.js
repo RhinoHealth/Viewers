@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { utils, user } from '@ohif/core';
+import OHIF, { utils, user } from '@ohif/core';
 //
 import ConnectedViewerRetrieveStudyData from '../connectedComponents/ConnectedViewerRetrieveStudyData';
 import useServer from '../customHooks/useServer';
@@ -37,6 +37,19 @@ function ViewerRouting({ match: routeMatch, location: routeLocation }) {
   let query = useQuery();
   const authToken = query.get('token');
 
+  /**
+   * Gets context via query strings and set custom headers
+   * to be sent on every dicomweb-client request.
+   *
+   * In order for this to work, cors needs to be enabled in the server.
+   */
+  const cohort_uid = query.get('cohort_uid');
+  const secure_access_list_uid = query.get('secure_access_list_uid');
+  OHIF.user.setHeaders({
+    cohort_uid,
+    secure_access_list_uid,
+  });
+  debugger;
   if (authToken) {
     user.getAccessToken = () => authToken;
   }

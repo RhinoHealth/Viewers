@@ -4,6 +4,7 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import dicomParser from 'dicom-parser';
 import version from './version.js';
 import AppContext from './context/AppContext';
+import DICOMWeb from "@ohif/core/src/DICOMWeb";
 
 export function setConfiguration(appConfig) {
   let homepage;
@@ -44,8 +45,19 @@ export function setConfiguration(appConfig) {
 
   cornerstoneWADOImageLoader.configure({
     beforeSend: function(xhr) {
-      const headers = OHIF.DICOMWeb.getAuthorizationHeader();
-
+      const headers = {
+        ...DICOMWeb.getAuthorizationHeader(),
+        ...OHIF.user.getHeaders(),
+      };
+      if (headers.cohort_uid) {
+        xhr.setRequestHeader('cohort_uid', headers.cohort_uid);
+      }
+      if (headers.secure_access_list_uid) {
+        xhr.setRequestHeader(
+          'secure_access_list_uid',
+          headers.secure_access_list_uid
+        );
+      }
       if (headers.Authorization) {
         xhr.setRequestHeader('Authorization', headers.Authorization);
       }

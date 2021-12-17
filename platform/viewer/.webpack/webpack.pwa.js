@@ -24,6 +24,8 @@ const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 const APP_CONFIG = process.env.APP_CONFIG || 'config/default.js';
 const PROXY_TARGET = process.env.PROXY_TARGET;
 const PROXY_DOMAIN = process.env.PROXY_DOMAIN;
+console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+console.log(PROXY_DOMAIN);
 const ENTRY_TARGET = process.env.ENTRY_TARGET || `${SRC_DIR}/index.js`;
 
 module.exports = (env, argv) => {
@@ -133,9 +135,9 @@ module.exports = (env, argv) => {
       // https: true,
       hot: true,
       open: true,
-      port: 3000,
+      port: 3002,
       host: '0.0.0.0',
-      public: 'http://localhost:' + 3000,
+      public: 'http://localhost:' + 3002,
       historyApiFallback: {
         disableDotRule: true,
       },
