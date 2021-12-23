@@ -27,6 +27,12 @@ const { urlUtil: UrlUtil } = OHIF.utils;
 
 function StudyListRoute(props) {
   let query = useQuery();
+  const cohort_uid = query.get('cohort_uid');
+  const secure_access_list_uid = query.get('secure_access_list_uid');
+  OHIF.user.setHeaders({
+    cohort_uid,
+    secure_access_list_uid,
+  });
   const { history, server, user, studyListFunctionsEnabled } = props;
   const [t] = useTranslation('Common');
   // ~~ STATE
@@ -259,7 +265,6 @@ function StudyListRoute(props) {
             const viewerPath = RoutesUtil.parseViewerPath(appConfig, server, {
               studyInstanceUIDs: studyInstanceUID,
             });
-            debugger;
             history.push(
               `${viewerPath}?cohort_uid=${cohort_uid}&secure_access_list_uid=${secure_access_list_uid}`
             );

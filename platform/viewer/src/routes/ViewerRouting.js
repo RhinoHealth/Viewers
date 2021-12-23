@@ -49,7 +49,6 @@ function ViewerRouting({ match: routeMatch, location: routeLocation }) {
     cohort_uid,
     secure_access_list_uid,
   });
-  debugger;
   if (authToken) {
     user.getAccessToken = () => authToken;
   }

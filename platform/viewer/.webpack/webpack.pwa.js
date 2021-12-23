@@ -136,6 +136,7 @@ module.exports = (env, argv) => {
       hot: true,
       open: true,
       port: 3002,
+      disableHostCheck: true,
       host: '0.0.0.0',
       public: 'http://localhost:' + 3002,
       historyApiFallback: {
