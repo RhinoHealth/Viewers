@@ -49,13 +49,13 @@ export function setConfiguration(appConfig) {
         ...DICOMWeb.getAuthorizationHeader(),
         ...OHIF.user.getHeaders(),
       };
-      if (headers.cohort_uid) {
-        xhr.setRequestHeader('cohort_uid', headers.cohort_uid);
+      if (headers.cohortuid) {
+        xhr.setRequestHeader('cohortuid', headers.cohortuid);
       }
-      if (headers.secure_access_list_uid) {
+      if (headers.secureaccesslistuid) {
         xhr.setRequestHeader(
-          'secure_access_list_uid',
-          headers.secure_access_list_uid
+          'secureaccesslistuid',
+          headers.secureaccesslistuid
         );
       }
       if (headers.Authorization) {

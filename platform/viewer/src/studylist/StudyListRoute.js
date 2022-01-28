@@ -21,18 +21,25 @@ import filesToStudies from '../lib/filesToStudies.js';
 import UserManagerContext from '../context/UserManagerContext';
 import WhiteLabelingContext from '../context/WhiteLabelingContext';
 import AppContext from '../context/AppContext';
-import useQuery from "../customHooks/useQuery";
+import useQuery from '../customHooks/useQuery';
 
 const { urlUtil: UrlUtil } = OHIF.utils;
 
 function StudyListRoute(props) {
   let query = useQuery();
-  const cohort_uid = query.get('cohort_uid');
-  const secure_access_list_uid = query.get('secure_access_list_uid');
-  OHIF.user.setHeaders({
-    cohort_uid,
-    secure_access_list_uid,
-  });
+  const cohortuid = query.get('cohortuid');
+  const secureaccesslistuid = query.get('secureaccesslistuid');
+  if (cohortuid && secureaccesslistuid) {
+    OHIF.user.setHeaders({
+      cohortuid,
+      secureaccesslistuid,
+    });
+  }
+  if (cohortuid) {
+    OHIF.user.setHeaders({
+      cohortuid,
+    });
+  }
   const { history, server, user, studyListFunctionsEnabled } = props;
   const [t] = useTranslation('Common');
   // ~~ STATE
@@ -260,13 +267,13 @@ function StudyListRoute(props) {
           // Rows
           studies={studies}
           onSelectItem={studyInstanceUID => {
-            const cohort_uid = query.get('cohort_uid');
-            const secure_access_list_uid = query.get('secure_access_list_uid');
+            const cohortuid = query.get('cohortuid');
+            const secureaccesslistuid = query.get('secureaccesslistuid');
             const viewerPath = RoutesUtil.parseViewerPath(appConfig, server, {
               studyInstanceUIDs: studyInstanceUID,
             });
             history.push(
-              `${viewerPath}?cohort_uid=${cohort_uid}&secure_access_list_uid=${secure_access_list_uid}`
+              `${viewerPath}?cohortuid=${cohortuid}&secureaccesslistuid=${secureaccesslistuid}`
             );
           }}
           // Table Header

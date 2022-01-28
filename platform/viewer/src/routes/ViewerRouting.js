@@ -43,12 +43,19 @@ function ViewerRouting({ match: routeMatch, location: routeLocation }) {
    *
    * In order for this to work, cors needs to be enabled in the server.
    */
-  const cohort_uid = query.get('cohort_uid');
-  const secure_access_list_uid = query.get('secure_access_list_uid');
-  OHIF.user.setHeaders({
-    cohort_uid,
-    secure_access_list_uid,
-  });
+  const cohortuid = query.get('cohortuid');
+  const secureaccesslistuid = query.get('secureaccesslistuid');
+  if (cohortuid && secureaccesslistuid) {
+    OHIF.user.setHeaders({
+      cohortuid,
+      secureaccesslistuid,
+    });
+  }
+  if (cohortuid) {
+    OHIF.user.setHeaders({
+      cohortuid,
+    });
+  }
   if (authToken) {
     user.getAccessToken = () => authToken;
   }
